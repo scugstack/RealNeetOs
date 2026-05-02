@@ -130,7 +130,7 @@ _G.asciiCodes = {
     DownArrow = 131,
 }
 
-_G.asciiDecapitalizer = setmetatable({
+local localasciiDecapitalizer = {
     [65] = 97,
     [66] = 98,
     [67] = 99,
@@ -179,7 +179,9 @@ _G.asciiDecapitalizer = setmetatable({
     [43] = 61,
     [124] = 92,
     [126] = 96,
-}, {__index = function (self,index) local translated = self[index] if translated then return translated else return index end end})
+}
+
+_G.asciiDecapitalizer = setmetatable({}, {__index = function (_,index) local translated = localasciiDecapitalizer[index] if translated then return translated else return index end end})
 
 _G.asciiCodesInverse = {}
 

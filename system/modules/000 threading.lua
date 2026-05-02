@@ -1,12 +1,15 @@
 _G.threading = {}
 local threads = {}
 function threading.step()
+    local pulled = {}
     for id,thread in pairs(threads) do
-        local pulledEvent = nil
+        local pulledEvent =  pulled[thread.filter or 1]
         if thread.filter then
             pulledEvent = event.getFirst(thread.category or "All",thread.filter)
+            pulled[thread.filter] = pulledEvent
         else
             pulledEvent = event.getFirst(thread.category or "All")
+            pulled[1] = pulledEvent
         end
         if (not thread.awaitingEvent or pulledEvent) and thread.nextRun <= chip.getTime() then
             local success, proto, val1, val2 = coroutine.resume(thread.coroutine,table.unpack(pulledEvent or {}))

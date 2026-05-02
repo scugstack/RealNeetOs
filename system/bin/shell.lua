@@ -11,6 +11,17 @@ while true do
     local args = {table.unpack(components,2)}
     local path = tHelp.resolveProgram(program)
     if path then
-        loadfile(path)(table.unpack(args))
+        local func,err = loadfile(path)
+        if func then
+            local succ,err = pcall(func,table.unpack(args))
+            if not succ then
+                printerror(err)
+            end
+            graphics.setMode(graphics.modes.TEXT)
+        else
+            printerror(err)
+        end
+    else
+        print("program not found:",program)
     end
 end

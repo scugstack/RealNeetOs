@@ -35,13 +35,40 @@ function threading.addThread(co)
         indx = indx + 1
         if threads[indx] == nil then
             threads[indx] = thread
-            return indx
+            return {PID = indx,isAlive = function () return co and co.status(co) ~= "dead" end,kill = function () if co and co.status(co) ~= "dead" then threading.kill(indx) end end}
         end
     end
 end
 
+function threading.blockOnThreads(...)
+    local threads = {...}
+    local PIDs = {}
+    for _,thread in ipairs(threads) do
+        PIDs[#PIDs+1] = threading.addThread(thread)
+    end
+    while true do
+        local can_end = true
+        for _,PID in ipairs(PIDs) do
+            if threading.isAlive(PID) then
+                can_end = false
+            end
+        end
+        if can_end then
+            return
+        end
+    end
+end
+
+function threading.isAlive(PID)
+    return PID.isAlive()
+end
+
+function threading.kill(PID)
+    threads[PID.PID] = nil
+end
+
 function _G.sleep(milis)
-    coroutine.yield("sleep", chip.getTime() + milis)
+    coroutine.yield("sleep", chip.getTime() + (milis or 0))
     return true
 end
 

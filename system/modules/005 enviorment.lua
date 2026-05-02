@@ -44,3 +44,7 @@ if fs.exists("system:/initial.env") then
         env.set(k,v)
     end
 end
+
+function _G.setfenv(f, env)
+    return load(string.dump(f), nil, nil, env)
+end

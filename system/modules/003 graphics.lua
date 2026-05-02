@@ -4,7 +4,7 @@ _G.screen = nil
 local mode = 0
 
 
-_G.graphics = {term={},bitmap=setmetatable({},{__index = function (index) return function (...) if mode == 1 then screen[index](...) end end end})}
+_G.graphics = {term={},bitmap=setmetatable({},{__index = function (_,index) return function (...) if mode == 1 then return screen[index](...) end end end})}
 
 --from https://stackoverflow.com/questions/1426954/split-string-in-lua by Mateen Ulhaq?
 local function split(inputstr, sep)

@@ -5,10 +5,12 @@ function font.drawChar(surface,px, py, char, r,g,b)
     for y=0,4 do
         local index = 1 + (string.byte(char) - 32) * 5 + y
         local charn = chars[index]
-        for x=0,2 do
-            local bitchar = bit32.band(charn, 2 ^ x)
-            if bitchar~=0 then
-                surface.drawPixel(x+px, y+py, r,g,b)
+        if charn then
+            for x=0,2 do
+                local bitchar = bit32.band(charn, 2 ^ x)
+                if bitchar~=0 then
+                    surface.drawPixel(x+px, y+py, r,g,b)
+                end
             end
         end
     end

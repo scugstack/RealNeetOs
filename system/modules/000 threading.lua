@@ -35,7 +35,7 @@ function threading.addThread(co)
         indx = indx + 1
         if threads[indx] == nil then
             threads[indx] = thread
-            return {PID = indx,isAlive = function () return co and co.status(co) ~= "dead" end,kill = function () if co and co.status(co) ~= "dead" then threading.kill(indx) end end}
+            return {PID = indx,isAlive = function () return co and coroutine.status(co) ~= "dead" end,kill = function () if co and coroutine.status(co) ~= "dead" then threading.kill(indx) end end}
         end
     end
 end

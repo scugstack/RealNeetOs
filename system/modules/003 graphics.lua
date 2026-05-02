@@ -21,12 +21,12 @@ end
 _G.graphics.modes = {TEXT=0,BITMAP=1}
 
 function _G.graphics.setMode(newmode)
-    if newmode == 0 then
+    if newmode == 0 and mode ~= newmode then
         screen.fill(0,0,0)
         screen.draw()
         mode = newmode
         graphics.term.draw()
-    elseif newmode == 1 then
+    elseif newmode == 1 and mode ~= newmode then
         screen.fill(0,0,0)
         screen.draw()
         mode = newmode

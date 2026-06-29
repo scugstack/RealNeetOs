@@ -1,10 +1,9 @@
 local success = true
 local drawChar1
 local didWork
-local fs = require("fs")
 local screen = _G.screen
-if fs.exists("bios:/font.lua") then
-	local fontFile = fs.open("bios:/font.lua","r")
+if files.exists("bios:/font.lua") then
+	local fontFile = files.open("bios:/font.lua","r")
 	local fontDat = fontFile.read("a")
 	fontFile.close()
 	local fontProg = load(fontDat,"font")
@@ -111,9 +110,9 @@ end
 local success = true
 local drawChar1
 local didWork
-if fs.exists("system:/boot.lua") then
+if files.exists("system:/boot.lua") then
 	print("found system:/boot.lua")
-	local bootFile = fs.open("system:/boot.lua","r")
+	local bootFile = files.open("system:/boot.lua","r")
 	local bootData = bootFile.read("a")
 	bootFile.close()
 	print("loading system:/boot.lua...")

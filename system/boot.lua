@@ -1,16 +1,13 @@
-
-local fs = require("fs")
-
 local function getFilesToLoad(path)
     if path:sub(path:len(),path:len()) ~= "/" then
         path = path.."/"
     end
     local out = {}
-    if fs.isDir(path) then
-        local children = fs.getChildren(path)
+    if files.isDir(path) then
+        local children = files.getChildren(path)
         for _,child in ipairs(children) do
             local newpath = path..child
-            if fs.isDir(child) then
+            if files.isDir(child) then
                 for _,i in ipairs(getFilesToLoad(newpath.."/")) do
                     out[#out+1] = i
                 end
@@ -25,10 +22,10 @@ local function getFilesToLoad(path)
 end
 
 local function loadFile(path)
-    if not fs.exists(path) then
+    if not files.exists(path) then
         error("file not found",2)
     end
-    local handle = fs.open(path,"r")
+    local handle = files.open(path,"r")
     local code = handle.read("a")
     handle.close()
     return load(code,path)

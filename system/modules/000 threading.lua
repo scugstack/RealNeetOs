@@ -67,7 +67,11 @@ function threading.isAlive(PID)
 end
 
 function threading.kill(PID)
-    threads[PID.PID] = nil
+    if type(PID) == "number" then
+        threads[PID] = nil
+    elseif type(PID) == "table" then
+        threads[PID.PID] = nil
+    end
 end
 
 function _G.sleep(milis)

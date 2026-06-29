@@ -1,4 +1,4 @@
-_G.fs = require("fs")
+_G.fs = files
 _G.fs.list = _G.fs.getChildren
 local utils = loadLibrary("stringUtils")
 
